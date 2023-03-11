@@ -1,0 +1,44 @@
+--- libtta-cpp-2.3/configure.ac.orig	2015-02-20 07:29:04.000000000 +0100
++++ libtta-cpp-2.3/configure.ac	2023-03-11 21:12:10.226979681 +0100
+@@ -6,10 +6,10 @@
+ AM_INIT_AUTOMAKE
+ 
+ # Initialize ranlib
+-AC_PROG_RANLIB
++AC_PROG_LIBTOOL
+ 
+ # Common compiler flags
+-CXXFLAGS="-Wall -O2 -funroll-loops -fomit-frame-pointer"
++CXXFLAGS="$CXXFLAGS -Wall"
+ 
+ # Determine CPU
+ AM_CONDITIONAL(CPU_X86, false)
+--- libtta-cpp-2.3/Makefile.am.orig	2015-02-20 07:26:08.000000000 +0100
++++ libtta-cpp-2.3/Makefile.am	2023-03-11 21:12:45.570121544 +0100
+@@ -1,13 +1,13 @@
+ AUTOMAKE_OPTIONS = no-dependencies foreign
+ 
+-lib_LIBRARIES = libtta++.a
++lib_LTLIBRARIES = libtta++.la
+ 
+-libtta___a_SOURCES = libtta.cpp libtta.h filter.h
++libtta___la_SOURCES = libtta.cpp libtta.h filter.h
+ 
+ if ENABLE_ASM
+ if CPU_ARM
+ EXTRA_libtta___a_SOURCES = filter_arm.S
+-libtta___a_LIBADD = filter_arm.o
++libtta___la_LIBADD = filter_arm.o
+ endif
+ endif
+ 
+--- libtta-cpp-2.3/console/Makefile.am.orig	2015-02-20 07:25:39.000000000 +0100
++++ libtta-cpp-2.3/console/Makefile.am	2023-03-11 21:13:01.623367910 +0100
+@@ -4,6 +4,6 @@
+ 
+ tta_SOURCES = tta.cpp tta.h
+ 
+-tta_LDADD = $(top_builddir)/libtta++.a
++tta_LDADD = $(top_builddir)/libtta++.la
+ 
+ EXTRA_DIST = Makefile.mipsel console.sln console.vcxproj*
